@@ -1,0 +1,68 @@
+{% extends 'AppBundle::layout.html.twig' %}
+
+{% block menu_shows %}active{% endblock %}
+
+{% block contents %}
+    <section>
+        <div class="container">
+
+            {% if (app.request.attributes.get('_route')!='search') %}
+                <div class="row">
+                    <div class="col-xs-4">
+                        <h3>Liste des séries</h3>
+                    </div>
+                    {% if (app.user) %}
+                        <div class="col-xs-8 text-right">
+                            <a class="btn btn-lg btn-success" href="{{ path('admin_add_show') }}">Ajouter une série</a>
+                        </div>
+                    {% endif %}
+                </div>
+            {% else %}
+                <h3>Résulats de la recherche</h3>
+            {% endif %}
+
+            <div class="row">
+                {% for show in shows %}
+                    <a href="{{ path('show', {id: show.id}) }}" class="tvshow col-sm-6">
+                        <img class="pull-left" src="{{ web_image('uploads/'~show.image).resize(100, 100).png }}" />
+                        <h4>{{ show.name }} ({{ show.seasons|length }} saisons)</h4>
+                        {{ show.synopsis }}
+                    </a>
+                {% endfor %}
+            </div>
+
+            {% if (app.request.attributes.get('_route')!='search') %}
+
+                <div class="text-center">
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination pagination-lg">
+
+                            {% if(pageActive > 4) %}
+                                <li><a href="{{ path('shows', {id: 1}) }}">1</a></li>
+                                <li class="disabled"><a>...</a></li>
+                            {% endif %}
+
+
+                            {% for i in pageDebut..pageFin %}
+                                {% if pageActive == i %}
+                                    <li class="active">
+                                {% else %}
+                                     <li>
+                                {% endif %}
+                                <a href="{{ path('shows', {id: i}) }}">{{ i }}</a></li>
+                            {% endfor %}
+
+                            {% if(pageActive < pageMax - 3) %}
+                                <li class="disabled"><a>...</a></li>
+                                <li><a href="{{ path('shows', {id: pageMax}) }}">{{ pageMax }}</a></li>
+                            {% endif %}
+
+                        </ul>
+                    </nav>
+                </div>
+            {% endif %}
+
+
+        </div>
+    </section>
+{% endblock %}
