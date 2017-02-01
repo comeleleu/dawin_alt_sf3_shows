@@ -1,3 +1,7 @@
+# php_sf3_shows
+
+Projet de J2E pour la Licence Pro DAWIN alt (IUT Info Gradignan)
+
 Symfony Standard Edition
 ========================
 
