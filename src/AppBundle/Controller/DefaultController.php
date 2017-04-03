@@ -107,10 +107,12 @@ class DefaultController extends Controller
 //            $query_shows
 //                ->select('s')
 //                ->from('AppBundle:TVShow', 's');
+//            $i = 0;
 //            foreach ($datas as $data) {
 //                $query_shows
-//                    ->andWhere('s.name LIKE :data OR s.synopsis LIKE :data')
-//                    ->setParameter('data', '%'.$data.'%');
+//                    ->andWhere('s.name LIKE :data'.$i.' OR s.synopsis LIKE :data'.$i)
+//                    ->setParameter('data'.$i, '%'.$data.'%');
+//                $i++;
 //            }
 
             $em = $this->getDoctrine()->getManager();
